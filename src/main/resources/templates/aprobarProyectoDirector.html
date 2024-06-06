@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Aprobar/Reprobar Proyectos</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+	<link rel="shortcut icon" th:href="@{/img/img1.png}" type="image/x-icon" />
+</head>
+
+<body>
+    <div class="container mt-4">
+        <div class="jumbotron">
+            <h1 class="text-center mb-3">Aprobar/Reprobar Proyectos</h1>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+                <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Título del Proyecto</th>
+                            <th scope="col">Descripción</th>
+                            <th scope="col">Nombre del Estudiante</th>
+                            <th scope="col">Link del Trabajo</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="trabajo : ${trabajos}">
+                            <td th:text="${trabajo.titulo}"></td>
+                            <td th:text="${trabajo.descripcion}"></td>
+                            <td th:text="${trabajo.idEstudiante.nombre}"></td>
+                            <td><a th:href="${trabajo.link}" target="_blank" th:text="${trabajo.link}"></a></td>
+                            <td th:text="${trabajo.estadoDirector}"></td>
+                            <td>
+                                <form th:action="@{/aprobarReprobarProyecto}" method="post" onsubmit="return confirm('¿Está seguro que desea aprobar este proyecto?')">
+                                    <input type="hidden" name="idProyecto" th:value="${trabajo.id}" />
+                                    <input type="hidden" name="accion" value="aprobar" />
+                                    <button type="submit" class="btn btn-success">Aprobar</button>
+                                </form>
+                                <form th:action="@{/aprobarReprobarProyecto}" method="post" onsubmit="return confirm('¿Está seguro que desea reprobar este proyecto?')">
+                                    <input type="hidden" name="idProyecto" th:value="${trabajo.id}" />
+                                    <input type="hidden" name="accion" value="reprobar" />
+                                    <button type="submit" class="btn btn-danger">Reprobar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a th:href="@{/}" class="btn btn-primary mt-3">Volver</a>
+            </div>
+        </div>
+    </div>
+    <br>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

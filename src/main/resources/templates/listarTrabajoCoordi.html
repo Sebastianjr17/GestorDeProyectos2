@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestionar Trabajos</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap">
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+	<link rel="shortcut icon" th:href="@{/img/img1.png}" type="image/x-icon" />
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="jumbotron">
+            <h1 class="text-center mb-3">Gestionar Trabajos</h1>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Título</th>
+                    <th>Descripción</th>
+                    <th>Estudiante</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="trabajo : ${listaTrabajos}">
+                    <td th:text="${trabajo.id}"></td>
+                    <td th:text="${trabajo.titulo}"></td>
+                    <td th:text="${trabajo.descripcion}"></td>
+                    <td th:text="${trabajo.idEstudiante.id}"></td>
+                    <td>
+                        <a th:href="@{/asignarDirectorEvaluador/{id}(id=${trabajo.id})}" class="btn btn-primary">Asignar Director/Evaluador</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+		<a th:href="@{/inicioCoordinador}" class="btn btn-info">Regresar</a>
+    </div>
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
